@@ -1,0 +1,171 @@
+.dora-pet {
+  --dora-size: 88px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9420;
+  width: var(--dora-size);
+  height: var(--dora-size);
+  pointer-events: none;
+  will-change: transform;
+  transition: transform .26s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
+}
+.dora-pet[hidden], .dora-ui[hidden], .dora-ui [hidden] { display: none !important; }
+.dora-pet[data-dragging="true"] { transition: none; }
+.dora-pet[data-vanish="true"] { opacity: 0; }
+.dora-pet__portrait {
+  display: block; width: 100%; height: 100%; margin: 0; padding: 0;
+  border: 0; outline-offset: 3px; background: transparent !important; box-shadow: none !important;
+  pointer-events: auto; cursor: grab !important; touch-action: none;
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent;
+}
+.dora-pet__portrait:hover { background: transparent !important; opacity: 1; }
+.dora-pet[data-dragging="true"] .dora-pet__portrait { cursor: grabbing !important; }
+.dora-pet[data-pose="peek"] .dora-pet__portrait { cursor: pointer !important; }
+.dora-pet__frame, .dora-pet__sway, .dora-pet__stage, .dora-pet__sprite {
+  position: relative; display: block; width: 100%; height: 100%; pointer-events: none;
+}
+.dora-pet__sway { transform: rotate(var(--dora-tilt, 0deg)); transform-origin: 50% 12%; transition: transform .08s ease-out; }
+.dora-pet__stage { transform-origin: 50% 88%; }
+.dora-pet__sprite svg, .dora-pet__sprite .dora-svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.dora-pet__sprite { filter: drop-shadow(0 3px 4px rgba(10, 40, 70, .22)); }
+.dora-pet[data-tucked="left"] .dora-pet__sprite { transform: rotate(90deg); }
+.dora-pet[data-tucked="right"] .dora-pet__sprite { transform: rotate(-90deg); }
+.dora-pet[data-tucked="top"] .dora-pet__sprite { transform: rotate(180deg); }
+.dora-pet[data-tucked] .dora-shadow { display: none; }
+
+/* Inner SVG motion: whole-figure transforms for the photo sprite plus animated effects. */
+.dora-svg text { font-family: "Arial Rounded MT Bold", "PingFang SC", "Microsoft YaHei", sans-serif; font-weight: 800; fill: #1d2433; }
+.dora-figure { transform-box: view-box; transform-origin: 100px 196px; }
+.dora-figure--sit { transform: translateY(5px) scale(1.04, .92); }
+.dora-figure--lie { transform: translate(-4px, 2px) rotate(-84deg) scale(.86); }
+.dora-closed-eyes { animation: none; }
+.dora-blade { transform-box: fill-box; transform-origin: center; animation: dora-blade .16s linear infinite; }
+.dora-zzz { animation: dora-rise 2.4s ease-in-out infinite; }
+.dora-snot { transform-box: fill-box; transform-origin: 0% 50%; animation: dora-snot 3.2s ease-in-out infinite; }
+.dora-sweat { animation: dora-drip 1.2s ease-in infinite; }
+.dora-pop, .dora-twinkle { transform-box: fill-box; transform-origin: center; animation: dora-pop .9s ease-in-out infinite alternate; }
+.dora-float { animation: dora-rise 1.8s ease-in-out infinite; }
+.dora-orbit { transform-box: view-box; transform-origin: 100px 6px; animation: dora-orbit 1.4s linear infinite; }
+.dora-steam { animation: dora-steam .5s ease-out infinite alternate; }
+.dora-spin-eye { transform-box: fill-box; transform-origin: center; animation: dora-spin 1s linear infinite; }
+.dora-dangle { transform-box: view-box; transform-origin: 100px 180px; animation: dora-flail .21s linear infinite alternate; }
+.dora-mouse { animation: dora-mouse 2.4s linear 1 forwards; }
+.dora-door { transform-box: fill-box; transform-origin: 0% 100%; animation: dora-door .5s cubic-bezier(.2,.8,.2,1) both; }
+.dora-pen { animation: dora-scribble .32s ease-in-out infinite alternate; transform-box: fill-box; transform-origin: 0% 100%; }
+
+@keyframes dora-wave { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+@keyframes dora-flail { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+@keyframes dora-pound { 0%, 100% { transform: rotate(0deg); } 45% { transform: rotate(-28deg); } 60% { transform: rotate(-20deg); } }
+@keyframes dora-scribble { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+@keyframes dora-rummage { from { transform: rotate(-8deg) translateY(0); } to { transform: rotate(6deg) translateY(2px); } }
+@keyframes dora-blink { 0%, 93%, 100% { transform: scaleY(1); } 95%, 97% { transform: scaleY(.1); } }
+@keyframes dora-blade { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.15); } }
+@keyframes dora-rise { 0% { transform: translateY(4px); opacity: .2; } 50% { opacity: 1; } 100% { transform: translateY(-8px); opacity: .2; } }
+@keyframes dora-snot { 0%, 100% { transform: scale(.4); } 60% { transform: scale(1.15); } }
+@keyframes dora-drip { 0% { transform: translateY(-4px); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
+@keyframes dora-pop { from { transform: scale(.85); } to { transform: scale(1.12); } }
+@keyframes dora-orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes dora-steam { from { transform: translateY(2px); opacity: .5; } to { transform: translateY(-4px); opacity: 1; } }
+@keyframes dora-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes dora-mouse { 0% { transform: translate(-30px, 190px) scaleX(-1); } 100% { transform: translate(230px, 190px) scaleX(-1); } }
+@keyframes dora-door { from { transform: scaleX(.1); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+
+/* Floating UI */
+.dora-ui {
+  position: fixed; top: 0; left: 0; width: 0; height: 0; z-index: 9421;
+  color: #17324d; font: 13px/1.55 "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; text-shadow: none;
+}
+.dora-ui *, .dora-ui *::before, .dora-ui *::after { box-sizing: border-box; }
+.dora-ui button { font: inherit; cursor: pointer; text-shadow: none; box-shadow: none; margin: 0; }
+.dora-ui p { margin: 4px 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.dora-ui h4 { margin: 14px 0 6px; font-size: 12px; color: #4f7896; }
+.dora-ui__bubble {
+  position: fixed; width: max-content; max-width: var(--dora-page-width, 320px); max-height: 220px;
+  overflow: auto; overscroll-behavior: contain; pointer-events: auto;
+  padding: 9px 12px; border: 2px solid #1ba1e2; border-radius: 16px;
+  background: #ffffff; color: #17324d; box-shadow: 0 4px 14px rgba(15, 76, 129, .18);
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.dora-ui__bubble[data-mode="line"] { pointer-events: none; border-color: #ffcf33; background: #fffbea; font-weight: 700; }
+.dora-ui__bubble[data-kind="success"] { border-color: #43a047; }
+.dora-ui__bubble[data-kind="warning"] { border-color: #f9a825; }
+.dora-ui__bubble[data-kind="error"] { border-color: #e53935; background: #fff6f6; }
+.dora-ui__bubble[data-kind="joke"] { border-color: #ff7eb6; background: #fff7fb; }
+.dora-ui__bubble-body { flex: 1 1 auto; min-width: 0; }
+.dora-ui__bubble-body.is-expandable { cursor: pointer; }
+.dora-ui__bubble-body.is-expandable:focus-visible { outline: 2px solid #1ba1e2; outline-offset: 2px; border-radius: 6px; }
+.dora-ui__bubble-heading { font-weight: 800; color: #0f6aa6; }
+.dora-ui__bubble[data-kind="joke"] .dora-ui__bubble-heading { color: #c2185b; }
+.dora-ui__bubble-detail { margin-top: 6px; padding-top: 6px; border-top: 1px dashed #b9dcf2; font-size: 12px; color: #3b5b75; }
+.dora-ui__bubble-detail-title { font-weight: 700; }
+.dora-ui__bubble-tools { display: flex; flex: 0 0 auto; align-items: center; gap: 6px; }
+.dora-ui__bubble-action {
+  border: 1px solid #1ba1e2; border-radius: 999px; background: #eaf6fd; color: #0f6aa6; padding: 3px 10px; font-weight: 700;
+}
+.dora-ui__bubble-action.is-danger { border-color: #e53935; background: #fdecea; color: #c62828; }
+.dora-ui__bubble-action:disabled { opacity: .5; cursor: default; }
+.dora-ui__bubble-close, .dora-ui__close {
+  width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: #0f6aa6;
+  font-size: 20px !important; line-height: 1;
+}
+.dora-ui__bubble-close:hover, .dora-ui__close:hover { background: #eaf6fd; }
+.dora-ui__notebook {
+  position: fixed; width: var(--dora-page-width, 320px); max-height: var(--dora-page-height, 460px);
+  overflow: auto; overscroll-behavior: contain; pointer-events: auto; padding: 14px;
+  background: #ffffff; border: 2px solid #1ba1e2; border-radius: 16px;
+  box-shadow: 0 6px 22px rgba(15, 76, 129, .22);
+}
+.dora-ui__header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.dora-ui__header strong { color: #0f6aa6; font-size: 15px; }
+.dora-ui__primary {
+  display: block; width: 100%; margin-bottom: 10px !important; padding: 8px 10px;
+  border: 0; border-radius: 10px; background: #1ba1e2; color: #fff; font-weight: 800;
+}
+.dora-ui__primary:hover { background: #1488c2; }
+.dora-ui__connection { color: #4f7896; font-size: 11px; padding-bottom: 8px; border-bottom: 1px dashed #b9dcf2; }
+.dora-ui__task, .dora-ui__record { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid #e3f0f9; }
+.dora-ui__task > div { flex: 1 1 auto; min-width: 0; }
+.dora-ui__record { display: block; font-size: 12px; }
+.dora-ui__stop { flex: 0 0 auto; border: 1px solid #e53935; border-radius: 999px; background: #fdecea; color: #c62828; padding: 3px 10px; font-weight: 700; }
+.dora-ui__stop:disabled { opacity: .55; cursor: default; }
+.dora-ui [data-kind="error"], .dora-ui [data-kind="warning"] { color: #c62828; }
+.dora-ui [data-kind="success"] { color: #2e7d32; }
+.dora-ui__stat { margin-top: 12px !important; color: #b26a00; font-size: 12px; }
+.dora-ui__controls { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.dora-ui__controls button, .dora-ui__small {
+  border: 1px solid #9fd3f1; border-radius: 999px; background: #f3faff; color: #0f6aa6; padding: 5px 11px;
+}
+.dora-ui__controls button:hover:not(:disabled), .dora-ui__small:hover { background: #dff1fc; }
+.dora-ui__controls button:disabled { opacity: .45; cursor: default; }
+.dora-ui__help { color: #6b8aa3; font-size: 11px; margin-top: 10px !important; }
+.dora-ui__story {
+  position: fixed; width: var(--dora-page-width, 320px); max-height: 300px; overflow: auto; overscroll-behavior: contain;
+  pointer-events: auto; padding: 12px 14px; border: 2px solid #1ba1e2; border-radius: 16px; background: #fff;
+  box-shadow: 0 4px 14px rgba(15, 76, 129, .18);
+}
+.dora-ui__story-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.dora-ui__story-heading strong { font-size: 14px; color: #0f6aa6; }
+.dora-ui__story p { margin: 8px 0 12px; font-size: 13px; line-height: 1.85; }
+.dora-ui__story-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: #6b8aa3; font-size: 11px; }
+
+/* Extension settings drawer; inherits the host theme colors. */
+.dora-settings { padding: 6px 0; }
+.dora-settings summary { cursor: pointer; padding: 6px 0; font-weight: 700; }
+.dora-settings label { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
+.dora-settings input[type="range"] { max-width: 160px; }
+.dora-settings__buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.dora-settings button {
+  appearance: none; border: 1px solid #1ba1e2 !important; border-radius: 8px; background: #1ba1e2 !important; color: #fff !important;
+  text-shadow: none !important; padding: 6px 12px; font-weight: 700; line-height: 1.3; cursor: pointer;
+}
+.dora-settings button:hover { background: #1488c2 !important; }
+.dora-settings p { opacity: .8; font-size: 12px; }
+
+body[data-dora-hide-pet] .acu-desk-pet { visibility: hidden !important; pointer-events: none !important; }
+body[data-dora-hide-bubble] .acu-notice-bubble { visibility: hidden !important; pointer-events: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dora-pet, .dora-pet__sway { transition: none !important; }
+  .dora-svg *, .dora-svg { animation: none !important; }
+}
